@@ -1,0 +1,8 @@
+
+export const OPEN_FORM = 'OPEN_FORM'
+export const CLOSE_FORM = 'CLOSE_FORM'
+export const TOGGLE_FORM = 'TOGGLE_FORM'
+export const PRODUCT_SELECTED = 'PRODUCT_SELECTED'
+export const PRODUCT_UNSELECTED = 'PRODUCT_UNSELECTED'
+export const USER_LOGIN 		= 'USER_LOGIN';
+export const USER_LOGOUT 		= 'USER_LOGOUT';
