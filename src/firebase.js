@@ -10,6 +10,8 @@ const config = {
 };
 
 export const firebaseApp = firebase.initializeApp(config);
+export const categorysRef = firebase.database().ref("categorys");
 export const productsRef = firebase.database().ref("products");
 export const productsDeletedRef = firebase.database().ref("productsDeleted");
 export const usersRef = firebase.database().ref("users");
+export const cartsRef = firebase.database().ref("carts");

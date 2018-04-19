@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 // import ProductDetail from '../components/ProductDetail';
 import { firebaseApp, usersRef } from './../firebase';
+import * as notify from './../constants/Notify';
 
 class Login extends Component {
   constructor(props) {
@@ -29,14 +30,14 @@ class Login extends Component {
     firebaseApp.auth()
       .createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
       .then(data => {
-        console.log(data);
         usersRef.child(data.uid).set({
           isAdmin: false,
           uid: data.uid
-        })
+        });
+        this.props.changeNotify(notify.NOTI_TYPE_SUCCESS, notify.NOTI_SIGNUP_SUCCESSFULL_TITLE, notify.NOTI_SIGNUP_SUCCESSFULL_MESSAGE);
       })
       .catch((error) => {
-        console.log(error);
+        this.props.changeNotify(notify.NOTI_TYPE_DANGER, notify.NOTI_SIGNUP_FAIL_TITLE, error.message );
       })
 
     event.preventDefault();
@@ -46,11 +47,11 @@ class Login extends Component {
     let { emailLogin, passwordLogin } = this.state;
     firebaseApp.auth()
       .signInWithEmailAndPassword(emailLogin, passwordLogin)
-      .then(data => {
-        console.log('OK');
+      .then(() => {
+        this.props.changeNotify(notify.NOTI_TYPE_SUCCESS, notify.NOTI_SIGNIN_SUCCESSFULL_TITLE, notify.NOTI_SIGNIN_SUCCESSFULL_MESSAGE );
       })
       .catch((error) => {
-        console.log(error);
+        this.props.changeNotify(notify.NOTI_TYPE_DANGER, notify.NOTI_SIGNIN_FAIL_TITLE, error.message );
       });
     event.preventDefault();
   }

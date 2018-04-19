@@ -6,11 +6,11 @@ import {
 } from 'react-router-dom';
 
 import routes from './../route-config';
-// import HomePage from '../pages/HomePage';
 import Header from './Header';
 import Footer from './Footer';
+import Notify from './Notify';
 // import Support from './Support';
-import Brand from './Brand';
+// import Brand from './Brand';
 
 class App extends Component {
   render() {
@@ -18,9 +18,9 @@ class App extends Component {
       <Router>
         <div>
           <Header />
+          <Notify />
           {this.showRoute(routes)}
-          {/* <HomePage /> */}
-          <Brand />
+          {/* <Brand /> */}
           {/* <Support /> */}
           <Footer />
         </div>

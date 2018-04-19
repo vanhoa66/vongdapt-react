@@ -3455,3 +3455,30 @@ h4.heading {
   color: #E09E25;
   padding-left: 10px;
 }
+
+.overlay {
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	z-index: 900;
+}
+.white-box {
+	width: 800px;
+	height: 600px;
+	background-color: #FFF;
+	border: 5px soild #FFF;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -300px;
+	margin-left: -400px;
+	z-index: 1000;
+}
+.product_view .modal-dialog{max-width: 800px; width: 100%;}
+.pre-cost{text-decoration: line-through; color: #a5a5a5;}
+.space-ten{padding: 10px 0;}

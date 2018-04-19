@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import logo from './../img/logo.png'
 
 class Footer extends Component {
   render() {
@@ -10,10 +11,10 @@ class Footer extends Component {
               <div className="col-sm-6 col-md-3">
                 <div className="footer-about">
                   <div className="image">
-                    <img src="img/header/logo.png" alt="vong da phong thuy" />
+                    <img src={logo} alt="vong da phong thuy" />
                     <h3>online jewelry store</h3>
                   </div>
-                  <p>perspiciatis unde omnis iste natus error sit voluptatem accm doloremque antium, totam rem aperiam, eaque ipsa perspiciatis unde omnis iste</p>
+                  <p>perspiciatisriam, eaque ipsa perspiciatis unde omnis iste</p>
                 </div>
                 <div className="footer-contact">
                   <div className="single-contact">
@@ -39,13 +40,21 @@ class Footer extends Component {
                       <i className="fa fa-dribbble" />
                     </div>
                     <div className="details">
-                      <a href=" ">info@olongker.com</a>
+                      <a href=" ">info@gmail.com</a><br />
                       <a href=" ">www.olongker.com</a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-sm-6 col-md-3">
+              <div className="col-md-5"></div>
+              <div className="col-sm-6 col-md-4">
+                <div className="fb-page" data-href="https://www.facebook.com/vongdaphongthuyNH/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                  <blockquote cite="https://www.facebook.com/vongdaphongthuyNH/" className="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/vongdaphongthuyNH/">Vòng đá phong thủy</a>
+                  </blockquote>
+                </div>
+              </div>
+              {/* <div className="col-sm-6 col-md-3">
                 <div className="footer-quick-link footer-links">
                   <h2>QUICK LINK</h2>
                   <ul>
@@ -59,8 +68,8 @@ class Footer extends Component {
                     <li><a href="contact.html">Contact</a></li>
                   </ul>
                 </div>
-              </div>
-              <div className="col-sm-12 col-md-6">
+              </div> */}
+              {/* <div className="col-sm-12 col-md-6">
                 <div className="row">
                   <div className="col-sm-8 footer-support footer-links">
                     <h2>OUR SUPPORT</h2>
@@ -94,7 +103,7 @@ class Footer extends Component {
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>{/*Start Footer top area*/}
@@ -106,7 +115,7 @@ class Footer extends Component {
                   <p>© 2015 <a href="">BootExperts</a>, All Right Reserved</p>
                 </div>
               </div>
-              <div className="col-sm-6">
+              {/* <div className="col-sm-6">
                 <div className="payment">
                   <ul>
                     <li><a href=" "><img src="img/footer/paypal.jpg" alt="vong da phong thuy" /></a></li>
@@ -116,7 +125,7 @@ class Footer extends Component {
                     <li><a href=" "><img src="img/footer/discover.jpg" alt="vong da phong thuy" /></a></li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

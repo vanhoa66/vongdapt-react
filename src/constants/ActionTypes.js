@@ -6,3 +6,12 @@ export const PRODUCT_SELECTED = 'PRODUCT_SELECTED'
 export const PRODUCT_UNSELECTED = 'PRODUCT_UNSELECTED'
 export const USER_LOGIN 		= 'USER_LOGIN';
 export const USER_LOGOUT 		= 'USER_LOGOUT';
+
+export const LIST_PRODUCT 		= 'LIST_PRODUCT';
+export const BUY_PRODUCT 		= 'BUY_PRODUCT';
+export const UPDATE_PRODUCT 	= 'UPDATE_PRODUCT';
+export const REMOVE_PRODUCT 	= 'REMOVE_PRODUCT';
+export const CHECKOUT_PRODUCT 	= 'CHECKOUT_PRODUCT';
+
+export const CHANGE_NOTIFY 		= 'CHANGE_NOTIFY';
+export const HIDE_NOTIFY 		= 'HIDE_NOTIFY';

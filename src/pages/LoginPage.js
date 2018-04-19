@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Login from '../components/Login';
 // import { productsRef } from './../firebase';
+import { actChangeNotify } from './../actions'
 
 class LoginPage extends Component {
 
 
   render() {
-
+    let { user } = this.props;
+    if (user.isLogin) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
-        <div className="page-title fix">{/*Start Title*/}
-          <div className="overlay section">
-            <h2>login / Register</h2>
-          </div>
-        </div>{/*End Title*/}
-        {/*start login Area*/}
-        <Login />
-        {/*End login Area*/}
+        <Login changeNotify={this.props.changeNotify}/>
       </div>
     );
   }
 }
 
-export default LoginPage;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    changeNotify: (style, title, content) => {
+      dispatch(actChangeNotify(style, title, content));
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

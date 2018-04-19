@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux'
 
-import { firebaseApp,productsRef } from './../firebase';
-import { closeForm, toggleForm, productUnSelected } from './../actions'
+import { productsRef } from './../firebase';
+import { closeForm, toggleForm, productUnSelected, actChangeNotify } from './../actions'
+import * as notify from './../constants/Notify';
 
 class FormProduct extends Component {
   constructor(props) {
@@ -45,14 +46,10 @@ class FormProduct extends Component {
   handleToggle = () => {
     this.props.toggleForm();
   }
-  
+
   handleCancel = () => {
     this.props.productUnSelected();
     this.props.closeForm();
-  }
-
-  handleLogout = () => {
-    firebaseApp.auth().signOut();
   }
 
   handleSubmit = (event) => {
@@ -60,24 +57,20 @@ class FormProduct extends Component {
     if (name !== "" && image !== "") {
       if (key === '') { //add new product
         productsRef.push({
-          key,
           name,
           image,
           price,
           description
         });
+        this.props.changeNotify(notify.NOTI_TYPE_SUCCESS, notify.NOTI_ADD_TASK_TITLE, notify.NOTI_ADD_TASK_MESSGAE);
       } else { //update product
         let updateProduct = { key, name, image, price, description };
         productsRef.child(key).update(updateProduct);
+        this.props.changeNotify(notify.NOTI_TYPE_SUCCESS, notify.NOTI_UPDATE_TASK_TITLE, notify.NOTI_UPDATE_TASK_MESSGAE);
       }
       this.props.closeForm();
     }
-    this.setState({
-      name: '',
-      image: '',
-      price: 0,
-      description: ''
-    });
+    this.props.productUnSelected();
     event.preventDefault();
   }
 
@@ -85,25 +78,30 @@ class FormProduct extends Component {
     let xhtm = null;
     let { user } = this.props;
     if (this.props.isShowForm) {
-      xhtm = <form id="signup-form" onSubmit={this.handleSubmit}>
-        <h2>Add new Product</h2>
-        <p>Create your own product</p>
-        <label>Name<span>*</span></label>
-        <input type="text" value={this.state.name} onChange={this.handleChange} name="name" />
-        <label>Image<span>*</span></label>
-        <input type="text" value={this.state.image} onChange={this.handleChange} name="image" />
-        <label>Price<span>*</span></label>
-        <input type="number" min={0} value={this.state.price} onChange={this.handleChange} name="price" />
-        <label>Description<span>*</span></label>
-        <textarea value={this.state.description} onChange={this.handleChange} name="description" className="form-control" rows="5" id="description"></textarea>
-        <input type="submit" defaultValue="Add" />
-        <input onClick={this.handleCancel} type="button" defaultValue="Cancel" />
-      </form>
+      xhtm = (
+        <div>
+          <div className="overlay"></div>
+          <div className="white-box container">
+            <form id="signup-form" onSubmit={this.handleSubmit}>
+              <h3>Create your own product</h3>
+              <label>Name<span>*</span></label>
+              <input type="text" value={this.state.name} onChange={this.handleChange} name="name" />
+              <label>Image<span>*</span></label>
+              <input type="text" value={this.state.image} onChange={this.handleChange} name="image" />
+              <label>Price<span>*</span></label>
+              <input type="number" min={0} value={this.state.price} onChange={this.handleChange} name="price" />
+              <label>Description<span>*</span></label>
+              <textarea value={this.state.description} onChange={this.handleChange} name="description" className="form-control" rows="5" id="description"></textarea>
+              <input type="submit" defaultValue="Add" />
+              <input onClick={this.handleCancel} type="button" defaultValue="Cancel" />
+            </form>
+          </div>
+        </div>
+      )
     };
     if (user.isLogin && user.info.isAdmin) {
       return (<div className="login container">
-        <input onClick={this.handleToggle} type="button" defaultValue="OpenForm" />
-        <input onClick={this.handleLogout} type="button" defaultValue="Logout" />
+        <input onClick={this.handleToggle} type="button" defaultValue="Add new Product" />
         {xhtm}
       </div>
       );
@@ -130,6 +128,9 @@ const mapDispatchToProps = dispatch => {
     },
     productUnSelected: () => {
       dispatch(productUnSelected())
+    },
+    changeNotify: (style, title, content) => {
+      dispatch(actChangeNotify(style, title, content));
     }
   }
 }

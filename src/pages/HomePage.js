@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import { productsRef } from './../firebase';
 
 import ProductsList from '../components/ProductsList';
-// import Blog from '../components/Blog';
 // import Slider from '../components/Slider';
-// import TopProducts from '../components/TopProducts';
 import FormProduct from '../components/FormProduct';
 
 class HomePage extends Component {
@@ -31,9 +29,11 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <FormProduct />
+        {/* <FormCategory /> */}
         {/* <Slider /> */}
         {/* <TopProducts /> */}
+        <FormProduct />
+        {/* <ProductsList /> */}
         <ProductsList products={this.state.products} />
         {/* <Blog /> */}
       </div>

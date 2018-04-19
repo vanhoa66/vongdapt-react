@@ -1,8 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-
+import { actChangeNotify} from './../actions/index';
+import * as notify from './../constants/Notify';
+import { firebaseApp } from './../firebase';
+import CartsList from './CartsList';
+import logo from './../img/logo.png'
 class Header extends Component {
+
+  handleLogout = () => {
+    firebaseApp.auth().signOut();
+    this.props.changeNotify(notify.NOTI_TYPE_DANGER, notify.NOTI_LOGOUT_SUCCESSFULL_TITLE, notify.NOTI_LOGOUT_SUCCESSFULL_MESSAGE );
+  }
+
   render() {
+
+    let { user } = this.props;
+    let elmWelcome = (<div className="log-link">
+      <p>Well come visitor you can</p>
+      <h5><Link to="login">Login</Link> or <Link to="login">Create an account</Link></h5>
+    </div>)
+    if (user.isLogin) {
+      elmWelcome = (<div className="log-link">
+        <p>Well come <b>{user.info.email}</b></p>
+        <p onClick={this.handleLogout}><i className="fa fa-sign-out"></i><span>Logout</span></p>
+        {/* <input onClick={this.handleLogout} type="button" defaultValue="Logout" /> */}
+      </div>);
+    }
+
     return (
       <div>
         <div className="header-top">
@@ -12,11 +37,11 @@ class Header extends Component {
                 <div className="info">
                   <div className="phn-num float-left">
                     <i className="fa fa-phone float-left" />
-                    <p>(000)  123  288  456 </p>
+                    <p>0987123456</p>
                   </div>
                   <div className="mail-id float-left">
                     <i className="fa fa-envelope-o float-left" />
-                    <p><a href=" ">info@olongker.com</a></p>
+                    <p><a href=" ">info@gmail.com</a></p>
                   </div>
                 </div>
               </div>
@@ -31,19 +56,7 @@ class Header extends Component {
               <div className="col-sm-12 col-md-4">
                 <div id="top-menu" className="float-right">
                   <ul>
-                    <li><a href=" ">My Account</a></li>
-                    <li><a href=" ">$USD <i className="fa fa-angle-down" /></a>
-                      <ul>
-                        <li><a href=" ">Pound</a></li>
-                        <li><a href=" ">BDT</a></li>
-                      </ul>
-                    </li>
-                    <li><a href=" ">English(UK) <i className="fa fa-angle-down" /></a>
-                      <ul>
-                        <li><a href=" ">English(USA)</a></li>
-                        <li><a href=" ">Bangla</a></li>
-                      </ul>
-                    </li>
+                    <li><Link to='/myaccount'>My Account</Link></li>
                   </ul>
                 </div>
               </div>
@@ -54,49 +67,17 @@ class Header extends Component {
           <div className="container">
             <div className="row">
               <div className="col-sm-4 col-lg-3">
-                <div className="log-link">
-                  <p>Well come visitor you can</p>
-                  <h5><Link to="login">Login</Link> or <Link to="login">Create an account</Link></h5>
-                </div>
+                {elmWelcome}
               </div>
               <div className="col-sm-4 col-lg-6">
                 <div className="logo text-center">
                   <Link to="/">
-                    <img src="img/header/logo.png" alt="header" />
+                    <img src={logo} alt="header" />
                     <h4>online jewelry store</h4>
                   </Link>
                 </div>
               </div>
-              <div className="col-sm-4 col-lg-3">
-                <div className="cart-info float-right">
-                  <a href="cart.html">
-                    <h5>My cart <span>2</span> items - <span>$390</span></h5>
-                    <i className="fa fa-shopping-cart" />
-                  </a>
-                  <div className="cart-hover">
-                    <ul className="header-cart-pro">
-                      <li>
-                        <div className="image"><a href=" "><img alt="cart item" src="img/cart-1.jpg" /></a></div>
-                        <div className="content fix"><a href=" ">Product Name</a><span className="price">Price: $130</span><span className="quantity">Quantity: 1</span></div>
-                        <i className="fa fa-trash delete" />
-                      </li>
-                      <li>
-                        <div className="image"><a href=" "><img alt="cart item" src="img/cart-2.jpg" /></a></div>
-                        <div className="content fix"><a href=" ">Product Name</a><span className="price">Price: $130</span><span className="quantity">Quantity: 2</span></div>
-                        <i className="fa fa-trash delete" />
-                      </li>
-                    </ul>
-                    <div className="header-button-price">
-                      <a href="checkout.html"><i className="fa fa-sign-out" /><span>Check Out</span></a>
-                      <div className="total-price"><h3>Total Price : <span>$390</span></h3></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="search float-right">
-                  <input type="text" defaultValue placeholder="Search Here...." />
-                  <button className="submit"><i className="fa fa-search" /></button>
-                </div>
-              </div>
+              <CartsList />
             </div>
           </div>
         </div>{/*End Header Area*/}
@@ -105,4 +86,18 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeNotify: (style, title, content) => {
+      dispatch(actChangeNotify(style, title, content));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
